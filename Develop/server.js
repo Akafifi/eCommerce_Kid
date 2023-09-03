@@ -1,11 +1,6 @@
 const express = require('express');
 const routes = require('./routes');
-const {Sequelize} = require('sequelize');
-
-const sequelize = new Sequelize('ecommerce_db', 'root', 'root321', {
-  host: 'localhost',
-  dialect: 'mysql'
-})
+const sequelize = require('./config/connection');
 
 console.log(sequelize)
 
