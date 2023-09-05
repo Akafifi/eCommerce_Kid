@@ -1,7 +1,8 @@
 const express = require('express');
-const routes = require('./Develop/routes');
+const routes = require('./routes');
 const sequelize = require('./Develop/config/connection')
-const { Sequelize, DataTypes } = require('sequelize')
+const { Sequelize, DataTypes, Model } = require('sequelize')
+require('./models')
 
 console.log(sequelize)
 
@@ -15,37 +16,16 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(routes);
 
-const Category = sequelize.define('Category', {
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
 
-  }
-})
-
-
-const Product = sequelize.define('Product', {
-  name: {
-    type: DataTypes.STRING,
-  },
-  price: {
-    type: DataTypes.DECIMAL,
-    allowNull: false,
-  },
-  stock: {
-    type: DataTypes.INTEGER
-  },
-  category_id: {
-    tpye: DataTypes.INTEGER,
-    allowNull: false,
-  }
-})
 
 
 
 
 
 // sync sequelize models to the database, then turn on the server
+sequelize.sync({ force: true })
+
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}!`);
 });
+
