@@ -5,7 +5,7 @@ const { Tag, Product, ProductTag } = require('../../models');
 
 router.get('/', (req, res) => {
   // find all tags
-  Tags.findAll
+  Tag.findAll
   // be sure to include its associated Product data
 });
 
@@ -29,7 +29,7 @@ router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
   Tag.update(
     {
-      name: req.body.name,
+      tag_name: req.body.tag_name,
 
     },
     {
