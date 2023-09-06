@@ -56,6 +56,29 @@ router.put('/:id', (req, res) => {
     res.json(err);
   });
 });
+// -------------------------------------
+router.put('/:id', async (req, res) => {
+  try{
+      //Calls the update method on the Tag model
+      const updateTag = await Tag.update(
+    {
+      // All the fields you can update and the data attached to the request body.
+      id: req.body.id,
+      tag_name: req.body.tag_name,
+    },
+    {
+      // Gets a tag based on the id given in the request parameters
+      where: {
+        id: req.params.id,
+      }
+    })
+    res.status(404).json(updateTag)
+    } catch(err) {
+      console.log(err);
+      res.json(err);
+    }
+  });
+  // -------------------------------------
 
 
 router.delete('/:id', async (req, res) => {
@@ -72,7 +95,7 @@ try {
     return;
   }
 
-  res.status(200).json(Data);
+  res.status(200).json(tagData);
 } catch (err) {
   res.status(500).json(err);
 }
