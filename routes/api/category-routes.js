@@ -4,17 +4,28 @@ const { Category, Product } = require('../../models');
 // The `/api/categories` endpoint
 
 router.get('/', (req, res) => {
-  // find all categories
+  try{
+      // find all categories
   // be sure to include its associated Products
-  Category.findAll({})
+  const allCategoryData = Category.findAll();
+  res.status(200).json(allCategoryData)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+
 });
 
 router.get('/:id', (req, res) => {
-    // find one category by its `id` value
+  try {
+        // find one category by its `id` value
   // be sure to include its associated Products
-  Book.findByPK(req.params.id).then((categoryData) => {
-    res.json(categoryData);
-  });
+  const categoryId = Category.findByPk(req.params.id);
+  res.status(200).json(categoryId)
+  } catch(err)  {
+    res.status(500).json(err);
+  }
+
+ 
 });
 
 router.post('/', (req, res) => {
@@ -28,28 +39,7 @@ router.post('/', (req, res) => {
     })
 });
 
-router.put('/:id', (req, res) => {
-  // update a category by its `id` value
-  Category.update(
-    {
-      name: req.body.name,
 
-    },
-    {
-      where: {
-        id: req.params.id,
-      },
-    }
-  )
-  .then((updatedId) => {
-    res.json(updatedId)
-  })
-  .catch((err) => {
-    console.log(err);
-    res.json(err);
-  });
-});
-// -------------------------------------------------------------------------------------
   router.put('/:category_id', async (req, res) => {
     try{
         //Calls the update method on the Category model
